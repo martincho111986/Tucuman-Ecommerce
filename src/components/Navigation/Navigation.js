@@ -1,10 +1,23 @@
-import React from "react";
+import { Badge, Drawer, Menu } from 'antd';
+import React, { useState } from 'react';
+import { ShoppingCartOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
+import CarritoCompras from '../CarritoCompras';
+
 import "./navigation.css";
 import Hombre from "./Hombre";
+import { useSelector } from 'react-redux';
+import { getCarrito } from '../../Redux/productos/productosSlice';
 
 const Navigation = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleSlider = () => setIsOpen((state) => !state);
+  const carrito = useSelector(getCarrito)
+  const badgeCount = carrito.length;
+
   return (
+    <>
+    
     <nav>
       <div className="wrapper">
         <div className="logo">
@@ -110,12 +123,33 @@ const Navigation = () => {
           <li>
             <Link to="/login">Login</Link>
           </li>
+          <li key='2'>
+            <Badge count={badgeCount}>
+              <ShoppingCartOutlined
+                style={{ color: 'white', fontSize: 20 }}
+                onClick={toggleSlider}
+               
+              />
+            </Badge>
+          </li>
         </ul>
+        
         <label htmlFor="menu-btn" className="btn menu-btn">
           <i className="fas fa-bars"></i>
         </label>
       </div>
     </nav>
+    <Drawer
+    title='Carrito de compras'
+    placement='right'
+    closable={false}
+    onClose={toggleSlider}
+    visible={isOpen}
+    width='450'
+  >
+   <CarritoCompras />
+  </Drawer>
+    </>
   );
 };
 
