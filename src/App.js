@@ -10,9 +10,12 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import SingleProduct from './components/SingleProduct/SingleProduct';
+import { Provider } from 'react-redux'
+import store from './Redux/store'
 
 function App() {
   return (
+    <Provider store={store}>
     <div className="App">
       <Router>
       <Navigation />
@@ -25,6 +28,7 @@ function App() {
       </Router>
       
     </div>
+    </Provider>
   );
 }
 
